@@ -12,7 +12,7 @@ const connection = require('../utils/connection')
 
 async function login(req, res) {
     /// define variable here!
-    const {username, password, device} = req.body
+    const { username, password, device, uuid } = req.body
     try {
         /// getting connection with pool
         connection.getConnection(function (error, connect) {
@@ -25,10 +25,10 @@ async function login(req, res) {
                 })
             } else {
                 /// define sqlquery here!
-                var sqlquery = 'SELECT * FROM pengguna where username = ?'
-                connect.query(sqlquery, [username], function (error, rows) {
+                var sqlquery = 'SELECT * FROM pengguna where username = ? and uuid = ?'
+                connect.query(sqlquery, [username, uuid], function (error, rows) {
                     /// close connection when sql query has been execute!
-                    connect.release() 
+                    connect.release()
                     /// checing query if sql query has been error will be message code below!
                     if (error) {
                         return res.status(407).send({
@@ -40,15 +40,13 @@ async function login(req, res) {
                         /// checking when result null or '' will be message code below!
                         if (rows.length <= 0) {
                             return res.status(400).send({
-                                message: 'Sorry 😞, username not found!',
+                                message: 'Sorry 😞, username not found or your device not valid!',
                                 error: rows.length,
                                 data: null
                             })
                         } else {
-                            console.log(password, rows[0].password)
                             /// comparing password string and password inside database within bcrypt
                             bcrypt.compare(password, rows[0].password, (errorreadcrypt, resultcrypt) => {
-                                console.log(errorreadcrypt, resultcrypt)
                                 if (resultcrypt) {
                                     /// value inside token validation!
                                     const dataToken = {
@@ -66,6 +64,7 @@ async function login(req, res) {
                                         access_token: access_token,
                                         nama: rows[0].nama,
                                         jabatan: rows[0].jabatan,
+                                        rekam_wajah: rows[0].rekam_wajah,
                                         data: resultcrypt
                                     })
                                 } else {
@@ -83,7 +82,6 @@ async function login(req, res) {
             }
         })
     } catch (error) {
-        console.log('Error Login?', error)
         return res.status(401).send({
             message: 'forbidden',
             error: error,

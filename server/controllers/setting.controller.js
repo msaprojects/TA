@@ -63,7 +63,7 @@ async function allSetting(req, res) {
  * * endpoint : POST /setting
  * * requirement jwt token in header, jam_masuk, jam_keluar, toleransi, flag_aktif in body
  */
-async function addSetting(req, res) {
+async function addSetting(req, res, datatoken) {
     /// parameter configuration
     const { jam_masuk, jam_keluar, toleransi, flag_aktif } = req.body
     /// getting connection with pool
@@ -93,7 +93,7 @@ async function addSetting(req, res) {
                     toleransi: toleransi,
                     flag_aktif: flag_aktif,
                     created: nows,
-                    idpengguna: jwtresult.idpengguna
+                    idpengguna: datatoken.idpengguna
                 }
                 /// query sql define here!
                 var sqlquery = "INSERT INTO setting SET ?"

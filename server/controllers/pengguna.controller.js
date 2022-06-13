@@ -103,7 +103,7 @@ async function addPengguna(req, res) {
                             jabatan: jabatan,
                             flag_aktif: flag_aktif,
                             created: nows,
-                            uuid: uuid
+                            uuid: uuid,
                         }
                         /// query sql define here!
                         var sqlquery = "INSERT INTO pengguna SET ?"
@@ -158,7 +158,7 @@ async function addPengguna(req, res) {
  */
 async function updatePengguna(req, res) {
     /// parameter configuration
-    const { nama, username, password, jabatan, flag_aktif, uuid } = req.body
+    const { nama, username, password, jabatan, flag_aktif, uuid, rekam_wajah } = req.body
     const { idpengguna } = req.params
     /// getting connection with pool
     connection.getConnection(function (error, connect) {
@@ -197,8 +197,9 @@ async function updatePengguna(req, res) {
                             password: encrypted,
                             jabatan: jabatan,
                             flag_aktif: flag_aktif,
-                            created: nows,
-                            uuid: uuid
+                            edited: nows,
+                            uuid: uuid,
+                            rekam_wajah: rekam_wajah
                         }
                         /// query sql define here!
                         var sqlquery = "UPDATE pengguna SET ? WHERE idpengguna = ?"
@@ -245,8 +246,118 @@ async function updatePengguna(req, res) {
     })
 }
 
+/// Update data wajah
+/**
+ * * endpoint : PUT /updaterekamwajah
+ * * requirement jwt token in header, password, rakam_wajah in body and idpengguna in token
+ */
+async function updateRekamWajah(req, res, decode) {
+    /// parameter configuration
+    const { password, rekam_wajah } = req.body
+    /// getting connection with pool
+    connection.getConnection(function (error, connect) {
+        /// if connection to mysql using pool error will be run code below!
+        if (error) {
+            return res.status(400).send({
+                message: 'Sorry 😞, your connection has refushed!',
+                error: error,
+                data: null
+            })
+        } else {
+            /// using begin transaction for conversion traffict to queue
+            connect.beginTransaction(function (error) {
+                /// if begin transaction fail to handling traffic will be run code below!
+                if (error) {
+                    return res.status(400).send({
+                        message: 'Sorry 😞, we have over traffic right now, please take a minute and try again...',
+                        error: error,
+                        data: null
+                    })
+                }
+
+                var sqlquery = `select password from pengguna where idpengguna=?`
+                connect.query(sqlquery, [decode.idpengguna], function (error, rows) {
+                    /// checing query if sql query has been error will be message code below!
+                    if (error) {
+                        return res.status(407).send({
+                            message: 'Sorry 😞, we wehave problem with sql query ...',
+                            error: error,
+                            data: null
+                        })
+                    } else {
+                        /// checking when result null or '' will be message code below!
+                        if (rows.length <= 0) {
+                            return res.status(400).send({
+                                message: 'Sorry 😞, username not found or your device not valid!',
+                                error: rows.length,
+                                data: null
+                            })
+                        } else {
+                            /// comparing password string and password inside database within bcrypt
+                            bcrypt.compare(password, rows[0].password, (errorreadcrypt, resultcrypt) => {
+                                if (resultcrypt) {
+                                    /// declare update form for save to database
+                                    let dataPengguna = {
+                                        rekam_wajah: rekam_wajah
+                                    }
+                                    /// query sql define here!
+                                    var sqlquery = "UPDATE pengguna SET ? WHERE idpengguna = ?"
+                                    /// execute sql query
+                                    connect.query(sqlquery, [dataPengguna, idpengguna], (error, result) => {
+                                        /// close connection when query has been execute
+                                        connect.release()
+                                        ///checking query
+                                        if (error) {
+                                            /// rollback connection when query has been error to execute
+                                            connect.rollback(function () {
+                                                return res.status(407).send({
+                                                    message: 'Sorry 😞, we have problems with sql query...',
+                                                    error: error,
+                                                    data: null
+                                                })
+                                            })
+                                        } else {
+                                            /// commit query when query doesn't have error 
+                                            connect.commit(function (errorcommit) {
+                                                /// if commit error connection will be rollback
+                                                if (errorcommit) {
+                                                    connect.rollback(function () {
+                                                        return res.status(407).send({
+                                                            message: 'Sorry 😞, we fail to store your data..., please try again.',
+                                                            error: errorcommit,
+                                                            data: null
+                                                        })
+                                                    })
+                                                } else {
+                                                    return res.status(200).send({
+                                                        message: 'Congrats! 😉, your data has been updated!',
+                                                        error: null,
+                                                        data: null
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    })
+                                } else {
+                                    /// return when password not match!
+                                    return res.status(401).send({
+                                        message: 'Sorry 😞, your password was wrong!',
+                                        error: errorreadcrypt,
+                                        data: null
+                                    })
+                                }
+                            })
+                        }
+                    }
+                })
+            })
+        }
+    })
+}
+
 module.exports = {
     allPengguna,
     addPengguna,
-    updatePengguna
+    updatePengguna,
+    updateRekamWajah
 }

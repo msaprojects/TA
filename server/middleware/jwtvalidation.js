@@ -15,6 +15,7 @@ async function jwtVerify(req, res, next) {
     try {
         const decode = jwt.verify(token.split(' ')[1], process.env.ACCESS_SECRET)
         req.decode = decode
+        console.log(decode.idpengguna, decode.uuid)
         /// checking api version and app version
         if (decode.appversion < process.env.API_VERSION) {
             return res.status(401).send({
