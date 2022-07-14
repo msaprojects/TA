@@ -35,21 +35,22 @@ const LoginPage = () => {
     /// UI
     return (
         <div className='h-screen w-screen flex bg-white'>
-            <div className='w-full max-w-md m-auto bg-gray-300 rounded-md  shadow-md py-10 px-16'>
-                <h1 className='font-bold text-2xl text-white mt-4 mb-12 text-center'>L O G I N</h1>
+            <div className='w-full max-w-md m-auto py-10 px-16'>
+                <h1 className='font-bold text-2xl mt-4 mb-12 text-center text-cyan-700'>L O G I N<br/>Sistem Monitoring Presensi</h1>
+                <br/>
                 <form onSubmit={loginHandler}>
-                    <input className='w-full p-2 text-gray-700 border rounded-md text-sm transition duration-150 ease-in-out mb-8 outline-dashed outline-gray-500'
+                    <input className='w-full p-2 text-gray-700 rounded-md text-sm transition duration-150 ease-in-out mb-8 outline outline-cyan-700'
                         type='text'
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder='Username' />
-                    <input className='w-full p-2 text-gray-700 border rounded-md outline-dashed outline-gray-500 text-sm transition duration-150 ease-in-out mb-12'
+                    <input className='w-full p-2 text-gray-700  rounded-md text-sm transition duration-150 ease-in-out mb-12 outline outline-cyan-700 shadow-md'
                         type='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder='Pass****' />
                     <div className='flex-auto justify-center items-center mt-7'>
-                        <button className='w-full h-12 px-6 text-white rounded-lg focus:shadow-outline hover:bg-gray-600 bg-gray-400 font-bold'>M A S U K</button>
+                        <button className='w-full h-12 px-6 text-white rounded-lg focus:shadow-outline hover:bg-gray-600 bg-yellow-400 font-bold shadow-xl'>M A S U K</button>
                     </div>
                 </form>
             </div>

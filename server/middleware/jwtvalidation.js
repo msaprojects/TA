@@ -4,7 +4,6 @@ var pool = require('../utils/connection')
 
 async function jwtVerify(req, res, next) {
     const token = req.headers.authorization
-    console.log(token)
     if (!token) {
         return res.status(401).send({
             message: 'Sorry 😞, We need token to authorization.',
@@ -15,7 +14,6 @@ async function jwtVerify(req, res, next) {
     try {
         const decode = jwt.verify(token.split(' ')[1], process.env.ACCESS_SECRET)
         req.decode = decode
-        console.log(decode.idpengguna, decode.uuid)
         /// checking api version and app version
         if (decode.appversion < process.env.API_VERSION) {
             return res.status(401).send({
@@ -27,7 +25,6 @@ async function jwtVerify(req, res, next) {
             /// checkin uuid in token and database active or deactive
             pool.getConnection(function (error, database) {
                 if (error) {
-                    console.log("Pool Refused jwt..", error)
                     return res.status(501).send({
                         message: "Connection timeout.",
                         data: error
@@ -37,7 +34,6 @@ async function jwtVerify(req, res, next) {
                     database.query(sqlquery, [decode.uuid, decode.idpengguna], function (error, rows) {
                         database.release()
                         if (error) {
-                            console.log("error query")
                             return res.status(407).send({
                                 message: "Sorry, sql query have problems",
                                 data: error
@@ -45,7 +41,6 @@ async function jwtVerify(req, res, next) {
                         } else {
                             /// if uuid deactive will be return code below
                             if (!rows.length) {
-                                console.log("device not active")
                                 return res.status(401).send({
                                     message: 'Sorry 😞, your Device id not active.',
                                     error: null,
@@ -61,7 +56,6 @@ async function jwtVerify(req, res, next) {
             })
         }
     } catch (error) {
-        console.log('Error JWT', error)
         return res.status(401).send({
             message: 'Sorry 😞, your session has been expired, please logout and login again.',
             error: error,

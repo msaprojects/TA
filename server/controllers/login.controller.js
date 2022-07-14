@@ -24,8 +24,14 @@ async function login(req, res) {
                     data: null
                 })
             } else {
+                var sqlquery = "";
+
                 /// define sqlquery here!
-                var sqlquery = 'SELECT * FROM pengguna where username = ? and uuid = ?'
+                if (device == 'WEB') {
+                    sqlquery = 'SELECT * FROM pengguna where username = ?'
+                } else {
+                    sqlquery = 'SELECT * FROM pengguna where username = ? and uuid = ?'
+                }
                 connect.query(sqlquery, [username, uuid], function (error, rows) {
                     /// close connection when sql query has been execute!
                     connect.release()

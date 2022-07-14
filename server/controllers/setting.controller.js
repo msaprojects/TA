@@ -13,7 +13,6 @@ var nows = { toSqlString: function () { return "NOW()" } }
  * * requirement : jwt token in header
  */
 async function allSetting(req, res) {
-
     /// getting connection with pool
     connection.getConnection(function (error, connect) {
         /// if connection to mysql using pool error will be run code below!
@@ -25,7 +24,7 @@ async function allSetting(req, res) {
             })
         } else {
             /// query sql define here!
-            var sqlquery = "SELECT * FROM setting"
+            var sqlquery = "SELECT * FROM setting order by idsetting desc"
             connect.query(sqlquery, (error, data) => {
                 /// close connection when query has been execute
                 connect.release()
@@ -55,7 +54,55 @@ async function allSetting(req, res) {
             })
         }
     })
+}
 
+/// getting active setting
+/**
+ * * endpoint : GET /settingaktif
+ * * requirement : jwt token in header
+ */
+async function activeSetting(req, res) {
+    /// getting connection with pool
+    connection.getConnection(function (error, connect) {
+        /// if connection to mysql using pool error will be run code below!
+        if (error) {
+            return res.status(400).send({
+                message: 'Sorry 😞, your connection has refushed!',
+                error: error,
+                data: null
+            })
+        } else {
+            /// query sql define here!
+            var sqlquery = "SELECT * FROM setting where flag_aktif=1 order by idsetting desc limit 1;"
+            connect.query(sqlquery, (error, data) => {
+                /// close connection when query has been execute
+                connect.release()
+                /// if query fail to run will be run code below!
+                if (error) {
+                    return res.status(500).send({
+                        message: 'Sorry 😞, server fail to execute query',
+                        error: error,
+                        data: null
+                    })
+                } else {
+                    /// if data setting empty will be run code below!
+                    if (data.length <= 0) {
+                        return res.status(204).send({
+                            message: 'Sorry 😞, Data empty',
+                            error: null,
+                            data: data
+                        })
+                    } else {
+                        return res.status(200).send({
+                            message: 'Data has fetching!',
+                            error: null,
+                            data: data
+                        })
+                    }
+                }
+            })
+        }
+    })
 }
 
 /// Adding data Setting
@@ -87,20 +134,18 @@ async function addSetting(req, res, datatoken) {
                     })
                 }
                 /// declare input form for save to database
-                let dataSetting = {
-                    jam_masuk: jam_masuk,
-                    jam_keluar: jam_keluar,
-                    toleransi: toleransi,
-                    flag_aktif: flag_aktif,
-                    created: nows,
+                let updatedataSetting = {
+                    flag_aktif: 0,
+                    edited: nows,
                     idpengguna: datatoken.idpengguna
                 }
+
                 /// query sql define here!
-                var sqlquery = "INSERT INTO setting SET ?"
+                var sqlquery = "UPDATE setting SET ? WHERE flag_aktif=1"
                 /// execute sql query
-                connect.query(sqlquery, dataSetting, (error, result) => {
+                connect.query(sqlquery, updatedataSetting, (error, result) => {
                     /// close connection when query has been execute
-                    connect.release()
+                    // connect.release()
                     ///checking query
                     if (error) {
                         /// rollback connection when query has been error to execute
@@ -124,10 +169,54 @@ async function addSetting(req, res, datatoken) {
                                     })
                                 })
                             } else {
-                                return res.status(201).send({
-                                    message: 'Congrats! 😉, your data has been stored!, refresh your page.',
-                                    error: null,
-                                    data: null
+                                /// declare input form for save to database
+                                let dataSetting = {
+                                    jam_masuk: jam_masuk,
+                                    jam_keluar: jam_keluar,
+                                    toleransi: toleransi,
+                                    flag_aktif: flag_aktif,
+                                    created: nows,
+                                    idpengguna: datatoken.idpengguna
+                                }
+
+                                /// query sql define here!
+                                var sqlquery = "INSERT INTO setting SET ?"
+                                /// execute sql query
+                                connect.query(sqlquery, dataSetting, (error, result) => {
+                                    /// close connection when query has been execute
+                                    connect.release()
+                                    ///checking query
+                                    if (error) {
+                                        /// rollback connection when query has been error to execute
+                                        connect.rollback(function () {
+                                            return res.status(407).send({
+                                                message: 'Sorry 😞, we have problems with sql query...',
+                                                error: error,
+                                                data: null
+                                            })
+                                        })
+                                    } else {
+                                        /// commit query when query doesn't have error 
+                                        connect.commit(function (errorcommit) {
+                                            /// if commit error connection will be rollback
+                                            if (errorcommit) {
+                                                connect.rollback(function () {
+                                                    return res.status(407).send({
+                                                        message: 'Sorry 😞, we fail to store your data..., please try again.',
+                                                        error: errorcommit,
+                                                        data: null
+                                                    })
+                                                })
+                                            } else {
+
+                                                return res.status(201).send({
+                                                    message: 'Congrats! 😉, your data has been stored!, refresh your page.',
+                                                    error: null,
+                                                    data: null
+                                                })
+                                            }
+                                        })
+                                    }
                                 })
                             }
                         })
@@ -221,6 +310,7 @@ async function updateSetting(req, res) {
 
 module.exports = {
     allSetting,
+    activeSetting,
     addSetting,
     updateSetting
 }

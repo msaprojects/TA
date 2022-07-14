@@ -20,6 +20,7 @@ class DashboardPage extends Component {
             jmlpresensiweb: [],
             loading: true,
             dataPresensi: [],
+            jamMasuk: [], jamKeluar: [], toleransi: [],
             /// AG Data Grid column and row definition
             columnDefs: [
                 {
@@ -79,7 +80,7 @@ class DashboardPage extends Component {
                     jmlpresensiweb: response.data.data[0].jml_presensi_site
                 })
             }).catch((error) => {
-                swal(`Sorry! ${error.response.message}`, {
+                swal(`Sorry! ${error}`, {
                     icon: "error",
                 });
             }).finally(() => {
@@ -110,14 +111,14 @@ class DashboardPage extends Component {
             this.setState({ loading: false })
         })
     }
-setwaktu(){
-    setInterval(() => {
-        const current = new Date();
-        const date = `${current.toLocaleDateString('id-ID', { weekday: 'long' })}, ${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()} ${current.getHours()}:${current.getMinutes()}:${current.getSeconds()}`;
-        this.setState({setwaktu: date})    
-    }, 1000);
-}
-    
+    setwaktu() {
+        setInterval(() => {
+            const current = new Date();
+            const date = `${current.toLocaleDateString('id-ID', { weekday: 'long' })}, ${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()} ${current.getHours()}:${current.getMinutes()}:${current.getSeconds()}`;
+            this.setState({ setwaktu: date })
+        }, 1000);
+    }
+
     render() {
         return (
             <>
@@ -137,11 +138,11 @@ setwaktu(){
                             <span>Refresh</span>
                         </button>
                         <div className="grid grid-cols-3 gap-4 items-center">
-                            <div className='bg-gray-300 rounded-md shadow-md py-10 px-16 items-center'>
-                                <h3>Jumlah Pegawai</h3>
-                                <h1>{this.state.jmlpegawai}</h1>
+                            <div className='bg-white border rounded-md shadow-md py-10 px-16 items-center'>
+                                <h3 className='font-medium text-lg'>Jumlah Pegawai</h3>
+                                <h1 className='font-medium text-xl'>{this.state.jmlpegawai}</h1>
                             </div>
-                            <div className='bg-gray-300 rounded-md  shadow-md py-10 px-16 col-span-2'>
+                            <div className='bg-white border rounded-md  shadow-md py-10 px-16 col-span-2'>
                                 <div className='grid grid-cols-4 gap-2'>
                                     <div className='col-span-2'>
                                         <h3>Jumlah Pegawai Presensi Hari Ini</h3>
@@ -157,7 +158,7 @@ setwaktu(){
                                     </div>
                                 </div>
                             </div>
-                            <div className='bg-gray-300 rounded-md mt-15 shadow-md py-2 px-2 col-span-3 ag-theme-material' style={{ height: '50vh' }}>
+                            <div className='bg-cyan-700 rounded-md mt-15 shadow-md py-2 px-2 col-span-3 ag-theme-material' style={{ height: '50vh' }}>
                                 {/* /// table data grid */}
                                 {/* <div className='ag-theme-alpine' style={{ height: '100vh' }}> */}
                                 <AgGridReact

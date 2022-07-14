@@ -158,7 +158,7 @@ async function addPengguna(req, res) {
  */
 async function updatePengguna(req, res) {
     /// parameter configuration
-    const { nama, username, password, jabatan, flag_aktif, uuid, rekam_wajah } = req.body
+    const { nama, username, password, jabatan, flag_aktif, uuid, rekam_wajah, rekam_wajah_web } = req.body
     const { idpengguna } = req.params
     /// getting connection with pool
     connection.getConnection(function (error, connect) {
@@ -303,7 +303,7 @@ async function updateRekamWajah(req, res, decode) {
                                     /// query sql define here!
                                     var sqlquery = "UPDATE pengguna SET ? WHERE idpengguna = ?"
                                     /// execute sql query
-                                    connect.query(sqlquery, [dataPengguna, idpengguna], (error, result) => {
+                                    connect.query(sqlquery, [dataPengguna, decode.idpengguna], (error, result) => {
                                         /// close connection when query has been execute
                                         connect.release()
                                         ///checking query
