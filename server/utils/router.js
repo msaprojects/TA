@@ -5,7 +5,7 @@ const router = express.Router()
 const jwtVerify = require("../middleware/jwtvalidation")
 
 // ! Dashboard
-var RouteToDashboard = require('../controllers/dashboard')
+var RouteToDashboard = require('../controllers/dashboard.controller')
 router.get('/jmlpegawai', jwtVerify, function (req, res) {
     RouteToDashboard.getCountPegawai(req, res)
 })
@@ -35,7 +35,7 @@ router.post('/updaterekamwajah', jwtVerify, function (req, res) {
 })
 
 // ! Presensi
-var RouteToPresensi = require('../controllers/presensi')
+var RouteToPresensi = require('../controllers/presensi.controller')
 router.get('/presensi', jwtVerify, function (req, res) {
     RouteToPresensi.allPresensi(req, res)
 })
@@ -62,7 +62,7 @@ router.put('/setting/:idsetting', jwtVerify, function (req, res) {
 })
 
 // ! Lokasi 
-var RouteToLokasi = require('../controllers/lokasi')
+var RouteToLokasi = require('../controllers/lokasi.controller')
 router.get('/lokasi', jwtVerify, function (req, res) {
     RouteToLokasi.getLokasi(req, res)
 })
@@ -77,6 +77,9 @@ router.put('/lokasi/:idlokasi', jwtVerify, function (req, res) {
 var RouteToTugas = require('../controllers/tugas.controller')
 router.get('/tugas', jwtVerify, function (req, res) {
     RouteToTugas.getTugas(req, res)
+})
+router.get('/tugaspengguna', jwtVerify, function (req, res) {
+    RouteToTugas.getTugasByPenggua(req, res, req.decode)
 })
 router.post('/tugas', jwtVerify, function (req, res) {
     RouteToTugas.addTugas(req, res, req.decode)

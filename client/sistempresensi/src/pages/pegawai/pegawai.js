@@ -102,7 +102,7 @@ class DataPegawaiPage extends Component {
                             </button>
                         </Link>
                         <div className="grid grid-cols-3 gap-4 items-center">
-                            <div className='border rounded-md mt-15 shadow-md py-2 px-2 col-span-3 ag-theme-material' style={{ height: '50vh' }}>
+                            <div className='border rounded-md mt-15 shadow-md py-2 px-2 col-span-3 ag-theme-material' style={{ height: '65vh' }}>
                                 {/* /// table data grid */}
                                 {/* <div className='ag-theme-alpine' style={{ height: '100vh' }}> */}
                                 <AgGridReact

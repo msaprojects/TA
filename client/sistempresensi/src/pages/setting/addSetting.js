@@ -9,8 +9,6 @@ import { useNavigate } from 'react-router-dom';
 const AddSetting = () => {
     const [jammasuk, setJamMasuk] = useState('');
     const [jamkeluar, setJamKeluar] = useState('');
-    const [toleransi, setToleransi] = useState('');
-
 
     /// routing
     const navigate = useNavigate()
@@ -21,7 +19,6 @@ const AddSetting = () => {
         const postData = {
             jam_masuk: jammasuk,
             jam_keluar: jamkeluar,
-            toleransi: toleransi,
             flag_aktif:'1'
         }
         await axios.post('setting', postData, {
@@ -70,7 +67,7 @@ const AddSetting = () => {
                 <div className='max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 flex flex-col justify-center items-center'>
                     <form className="w-full max-w-lg">
                         <div className="flex flex-wrap -mx-3 mb-6">
-                            <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                                     Jam Masuk
                                 </label>
@@ -81,7 +78,7 @@ const AddSetting = () => {
                                     onChange={(e) => setJamMasuk(e.target.value)}
                                     placeholder="08:00:00" />
                             </div>
-                            <div className="w-full md:w-1/3 px-3">
+                            <div className="w-full md:w-1/2 px-3">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
                                     Jam Keluar
                                 </label>
@@ -92,18 +89,7 @@ const AddSetting = () => {
                                     onChange={(e) => setJamKeluar(e.target.value)}
                                     placeholder="16:00:00" />
                             </div>
-                            <div className="w-full md:w-1/3 px-3">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                                    Toleransi
-                                </label>
-                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-last-name"
-                                    type="time"
-                                    value={toleransi}
-                                    onChange={(e) => setToleransi(e.target.value)}
-                                    placeholder="15" />
-                                    <p className="text-gray-600 text-xs italic">(*)Menuit</p>
-                            </div>
+                            
                         </div>
                         <div className='flex-auto justify-center items-center mt-12'>
                             <button className='w-full h-12 px-6 text-white rounded-lg focus:shadow-outline hover:bg-gray-600 bg-cyan-700 font-bold shadow-xl'

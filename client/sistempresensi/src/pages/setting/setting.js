@@ -28,10 +28,6 @@ class SettingPage extends Component {
                     field: 'jam_keluar',
                 },
                 {
-                    headerName: "Toleransi Masuk",
-                    field: 'toleransi',
-                },
-                {
                     headerName: 'Status',
                     field: 'flag_aktif',
                     valueFormatter: params => params.value === 1 ? 'Aktif' : 'Non-Aktif',

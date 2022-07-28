@@ -74,7 +74,7 @@ async function getCountPegawai(req, res) {
             })
         } else {
             /// query sql define here!
-            var sqlquery = `SELECT (SELECT count(idpresensi) FROM presensi WHERE date(timestamp)=date(now())) as jml_presensi, (SELECT count(idpresensi) FROM presensi WHERE device='Mobile' and date(timestamp)=date(now())) as jml_presensi_mobile, (SELECT count(idpresensi) FROM presensi WHERE device='Site' and date(timestamp)=date(now())) as jml_presensi_site`
+            var sqlquery = `SELECT (SELECT count(idpresensi) FROM presensi WHERE date(timestamp)=date(now())) as jml_presensi, (SELECT count(idpresensi) FROM presensi WHERE device='Mobile' and date(timestamp)=date(now())) as jml_presensi_mobile, (SELECT count(idpresensi) FROM presensi WHERE device='Site' and date(timestamp)=date(now())) as jml_presensi_site, (SELECT COUNT(idpresensi) FROM presensi p, setting s WHERE p.idsetting=s.idsetting and p.waktu>s.jam_masuk and date(p.timestamp)=date(now())) as terlambat;`
             connect.query(sqlquery, (error, data) => {
                 /// close connection when query has been execute
                 connect.release()

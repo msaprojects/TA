@@ -14,8 +14,8 @@ import DataPegawaiPage from "./pages/pegawai/pegawai";
 import AddPegawai from "./pages/pegawai/addPegawai"
 
 // | SETTING
-import SettingPage from "./pages/setting.js/setting";
-import AddSetting from "./pages/setting.js/addSetting";
+import SettingPage from "./pages/setting/setting";
+import AddSetting from "./pages/setting/addSetting";
 
 // | WEBCAM
 import FaceRegister from "./pages/webcam/faceregister";
@@ -28,6 +28,10 @@ import AddLokasi from "./pages/lokasi/addLokasi";
 // | TUGAS
 import TugasPage from "./pages/tugas/tugas";
 import AddTugas from "./pages/tugas/addTugas";
+
+// | PRESENSI
+import Datapresensi from "./pages/report/presensi/datapresensi";
+
 
 class App extends Component {
   render() {
@@ -69,6 +73,9 @@ class App extends Component {
         </Route>
         <Route exact path='/addtugas' element={<PrivateRoute/>}>
           <Route exact path='/addtugas' element={<AddTugas/>}/>
+        </Route>
+        <Route exact path='/datapresensi' element={<PrivateRoute/>}>
+          <Route exact path='/datapresensi' element={<Datapresensi/>}/>
         </Route>
       </Routes>
     </div>

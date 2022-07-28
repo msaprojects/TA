@@ -108,11 +108,15 @@ async function activeSetting(req, res) {
 /// Adding data Setting
 /**
  * * endpoint : POST /setting
- * * requirement jwt token in header, jam_masuk, jam_keluar, toleransi, flag_aktif in body
+ * * requirement jwt token in header, jam_masuk, jam_keluar, flag_aktif in body
+ */
+/**
+ * | NOTE
+ * ! field toleransi dihapus karena dijadikan satu dengan jam masuk (included)
  */
 async function addSetting(req, res, datatoken) {
     /// parameter configuration
-    const { jam_masuk, jam_keluar, toleransi, flag_aktif } = req.body
+    const { jam_masuk, jam_keluar, flag_aktif } = req.body
     /// getting connection with pool
     connection.getConnection(function (error, connect) {
         /// if connection to mysql using pool error will be run code below!
@@ -173,7 +177,6 @@ async function addSetting(req, res, datatoken) {
                                 let dataSetting = {
                                     jam_masuk: jam_masuk,
                                     jam_keluar: jam_keluar,
-                                    toleransi: toleransi,
                                     flag_aktif: flag_aktif,
                                     created: nows,
                                     idpengguna: datatoken.idpengguna
@@ -230,11 +233,13 @@ async function addSetting(req, res, datatoken) {
 /// Update data Setting
 /**
  * * endpoint : PUT /setting
- * * requirement jwt token in header, jam_masuk, jam_keluar, toleransi, flag_aktif in body and idsetting in path
+ * * requirement jwt token in header, jam_masuk, jam_keluar, flag_aktif in body and idsetting in path
  */
+
+
 async function updateSetting(req, res) {
     /// parameter configuration
-    const { jam_masuk, jam_keluar, toleransi, flag_aktif } = req.body
+    const { jam_masuk, jam_keluar, flag_aktif } = req.body
     const { idsetting } = req.params
     /// getting connection with pool
     connection.getConnection(function (error, connect) {
@@ -260,7 +265,6 @@ async function updateSetting(req, res) {
                 let dataSetting = {
                     jam_masuk: jam_masuk,
                     jam_keluar: jam_keluar,
-                    toleransi: toleransi,
                     flag_aktif: flag_aktif,
                     edited: nows,
                     idpengguna: jwtresult.idpengguna

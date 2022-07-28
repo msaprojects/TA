@@ -18,9 +18,11 @@ class DashboardPage extends Component {
             jmlpresensihari: [],
             jmlpresensimobile: [],
             jmlpresensiweb: [],
+            jmlterlambat: [],
             loading: true,
             dataPresensi: [],
-            jamMasuk: [], jamKeluar: [], toleransi: [],
+            jamMasuk: [],
+            jamKeluar: [],
             /// AG Data Grid column and row definition
             columnDefs: [
                 {
@@ -31,7 +33,7 @@ class DashboardPage extends Component {
                 {
                     headerName: "Status",
                     field: 'flag_presensi',
-                    valueFormatter: params => params.value === 1 ? 'Masuk' : 'Keluar',
+                    valueFormatter: params => params.value === 1 ? 'Masuk' : params.value === 2 ? 'Keluar' : '-',
                 },
                 {
                     headerName: "Presensi By",
@@ -40,6 +42,10 @@ class DashboardPage extends Component {
                 {
                     headerName: 'Jam Presensi',
                     field: 'waktu'
+                },
+                {
+                    headerName: 'Terlambat',
+                    field: 'terlambat'
                 }
             ],
             /// AG Data Grid default column options
@@ -77,7 +83,8 @@ class DashboardPage extends Component {
                 this.setState({
                     jmlpresensihari: response.data.data[0].jml_presensi,
                     jmlpresensimobile: response.data.data[0].jml_presensi_mobile,
-                    jmlpresensiweb: response.data.data[0].jml_presensi_site
+                    jmlpresensiweb: response.data.data[0].jml_presensi_site,
+                    jmlterlambat: response.data.data[0].terlambat
                 })
             }).catch((error) => {
                 swal(`Sorry! ${error}`, {
@@ -145,7 +152,7 @@ class DashboardPage extends Component {
                             <div className='bg-white border rounded-md  shadow-md py-10 px-16 col-span-2'>
                                 <div className='grid grid-cols-4 gap-2'>
                                     <div className='col-span-2'>
-                                        <h3>Jumlah Pegawai Presensi Hari Ini</h3>
+                                        <h3>Jumlah Presensi Hari Ini</h3>
                                         <h1>{this.state.jmlpresensihari}</h1>
                                     </div>
                                     <div>
@@ -155,6 +162,10 @@ class DashboardPage extends Component {
                                     <div>
                                         <h3>Mobile</h3>
                                         <h1>{this.state.jmlpresensimobile}</h1>
+                                    </div>
+                                    <div>
+                                        <h3>Terlambat</h3>
+                                        <h1>{this.state.jmlterlambat} Orang</h1>
                                     </div>
                                 </div>
                             </div>

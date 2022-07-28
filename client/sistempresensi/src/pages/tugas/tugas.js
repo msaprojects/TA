@@ -38,7 +38,7 @@ class TugasPage extends Component {
                 {
                     headerName: 'Status',
                     field: 'flag_aktif',
-                    valueFormatter: params => params.value === 1 ? 'Sudah Selesai' : 'Belum Selesai',
+                    valueFormatter: params => params.value === 1 ? 'Sedang proses' : params.value === 2 ? 'Sudah Selesai' : 'Belum Diproses',
                 }
             ],
             /// AG Data Grid default column options
@@ -96,7 +96,7 @@ class TugasPage extends Component {
                             </button>
                         </Link>
                         <div className="grid grid-cols-3 gap-4 items-center">
-                            <div className='border rounded-md mt-15 shadow-md py-2 px-2 col-span-3 ag-theme-material' style={{ height: '75vh' }}>
+                            <div className='border rounded-md mt-15 shadow-md py-2 px-2 col-span-3 ag-theme-material' style={{ height: '65vh' }}>
                                 {/* /// table data grid */}
                                 {/* <div className='ag-theme-alpine' style={{ height: '100vh' }}> */}
                                 <AgGridReact

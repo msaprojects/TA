@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../utils/server'
 import swal from 'sweetalert'
+import { FaCommentsDollar } from 'react-icons/fa';
 
 
 const LoginPage = () => {
@@ -22,9 +23,16 @@ const LoginPage = () => {
             uuid: 'abcde'
         }
         await axios.post('login', loginData).then((response) => {
-            localStorage.setItem('token', response.data.access_token)
-            localStorage.setItem('nama', response.data.nama)
-            navigate('/dashboard')
+            /// filtering access role
+            if (response.data.jabatan === 'admin' || response.data.jabatan === 'HR') {
+                localStorage.setItem('token', response.data.access_token)
+                localStorage.setItem('nama', response.data.nama)
+                navigate('/dashboard')
+            } else {
+                swal(`Anda tidak punya akses!`, {
+                    icon: "error",
+                });
+            }
         }).catch((error) => {
             swal(`Sorry! ${error.response.data.message}`, {
                 icon: "error",
@@ -36,8 +44,8 @@ const LoginPage = () => {
     return (
         <div className='h-screen w-screen flex bg-white'>
             <div className='w-full max-w-md m-auto py-10 px-16'>
-                <h1 className='font-bold text-2xl mt-4 mb-12 text-center text-cyan-700'>L O G I N<br/>Sistem Monitoring Presensi</h1>
-                <br/>
+                <h1 className='font-bold text-2xl mt-4 mb-12 text-center text-cyan-700'>L O G I N<br />Sistem Monitoring Presensi</h1>
+                <br />
                 <form onSubmit={loginHandler}>
                     <input className='w-full p-2 text-gray-700 rounded-md text-sm transition duration-150 ease-in-out mb-8 outline outline-cyan-700'
                         type='text'

@@ -56,6 +56,55 @@ async function getTugas(req, res) {
     })
 }
 
+/// getting all data lokasi
+/**
+ * * endpoint : GET /setting
+ * * requirement : jwt token in header
+ */
+async function getTugasByPenggua(req, res, datatoken) {
+    /// getting connection with pool
+    connection.getConnection(function (error, connect) {
+        /// if connection to mysql using pool error will be run code below!
+        if (error) {
+            return res.status(400).send({
+                message: 'Sorry 😞, your connection has refushed!',
+                error: error,
+                data: null
+            })
+        } else {
+            /// query sql define here!
+            var sqlquery = "SELECT t.*, l.nama as lokasi, l.longitude, l.latitude, p.nama FROM tugas t, pengguna p, lokasi l where t.idpengguna=p.idpengguna and l.idlokasi=t.idlokasi and p.idpengguna = ?"
+            connect.query(sqlquery, [datatoken.idpengguna], (error, data) => {
+                /// close connection when query has been execute
+                connect.release()
+                /// if query fail to run will be run code below!
+                if (error) {
+                    return res.status(500).send({
+                        message: 'Sorry 😞, server fail to execute query',
+                        error: error,
+                        data: null
+                    })
+                } else {
+                    /// if data setting empty will be run code below!
+                    if (data.length <= 0) {
+                        return res.status(204).send({
+                            message: 'Sorry 😞, Data empty',
+                            error: null,
+                            data: data
+                        })
+                    } else {
+                        return res.status(200).send({
+                            message: 'Data has fetching!',
+                            error: null,
+                            data: data
+                        })
+                    }
+                }
+            })
+        }
+    })
+}
+
 /// Adding data lokasi
 /**
  * * endpoint : POST /lokasi
@@ -220,6 +269,7 @@ async function updateTugas(req, res) {
 
 module.exports = {
     getTugas,
+    getTugasByPenggua,
     addTugas,
     updateTugas
 }

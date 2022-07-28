@@ -71,7 +71,9 @@ async function login(req, res) {
                                         nama: rows[0].nama,
                                         jabatan: rows[0].jabatan,
                                         rekam_wajah: rows[0].rekam_wajah,
-                                        data: resultcrypt
+                                        data: resultcrypt,
+                                        /// idpengguna ditampilkan untuk keperluan presensi, karena api presensi belum bisa filter otomatis antara presensi by mobile atauu web
+                                        idpengguna: rows[0].idpengguna,
                                     })
                                 } else {
                                     /// return when password not match!

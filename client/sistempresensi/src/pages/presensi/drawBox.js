@@ -48,9 +48,11 @@ class DrawBox extends Component {
     const presensiData = {
       latitude: '0',
       longitude: '0',
-      device: 'WEB',
-      idpengguna: e
+      device: 'Site',
+      idpengguna: e,
+      idtugas: '0'
     }
+    console.log(presensiData)
     await axios.post('presensi', presensiData, {
       headers: { Authorization: `Bearer ` + localStorage.getItem("token") },
     }).then((response) => {
@@ -113,7 +115,7 @@ class DrawBox extends Component {
                     transform: `translate(-3px,${_H}px)`
                   }}
                 >
-                  {this.state.expression[0].happy >= 0.7 ? 'Terima Kasih telah senyum ' + match[i]._label.split(' - ')[0] : 'Senyum Dong!'}
+                  {this.state.expression[0].happy >= 0.7 ? 'Terima Kasih telah senyum ' + match[i]._label.split(' - ')[0] : `Senyum Dong ${match[i]._label.split(' - ')[0]}!`}
                 </p>
               ) : null}
             </div>
