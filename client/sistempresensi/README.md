@@ -35,5 +35,12 @@ jika ada pertanyaan silahkan hubungi msadev96@gmail.com
 ## Tools
 - Visual Studio Code
 
-# API
+## API
 - ExpressJs
+
+### Bahasa Pemerograman
+- JavaScript
+- Html
+
+### Framework
+- ReactJS
