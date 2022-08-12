@@ -1,16 +1,5 @@
 # Sistem Presensi Berbasis Pengenalan Wajah dengan Flutter
 
-## Installasi
-- `Clone project` ini
-- pastikan flutter anda versi 2.8.1 apabila kurang atau lebih dari versi tersebut mungkin harus ada beberapa penyesuaian terkait library dan coding
-- ketik ```flutter pub get``` setelah project ini dibuka
-
-## Tools
-- Visual Studio Code
-
-## Api
-- ExpressJs
-
 ## Deskripsi
 ini merupakan project tugas akhir S1 Universitas Dr. Soetomo.
 
@@ -37,3 +26,21 @@ pada aplikasi ini terdapat beberapa rule atau aturan dalam penggunaannya. sebaga
 Sumber untuk pengenalan wajah ini diambil dari : https://github.com/MCarlomagno/FaceRecognitionAuth
 
 jika ada pertanyaan hubungi msadev@gmail.com
+
+
+## Installasi
+- `Clone project` ini
+- pastikan flutter anda versi 2.8.1 apabila kurang atau lebih dari versi tersebut mungkin harus ada beberapa penyesuaian terkait library dan coding
+- ketik ```flutter pub get``` setelah project ini dibuka
+
+## Tools
+- Visual Studio Code
+
+## Api
+- ExpressJs
+
+### Bahasa pemerograman 
+- Dart
+
+### Framework
+- Flutter
