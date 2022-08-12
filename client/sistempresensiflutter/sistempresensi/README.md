@@ -16,6 +16,7 @@ ini merupakan project tugas akhir S1 Universitas Dr. Soetomo.
 
 pada project ini terdapat beberapa fitur seperti :
 
+- Splash Screen
 - Login
 - Dashboard
   - Tugas
