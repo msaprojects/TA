@@ -30,6 +30,8 @@ pada aplikasi ini terdapat beberapa rule atau aturan dalam penggunaannya. sebaga
   > aplikasi ini mengunci ID Device setiap HP dan setiap Username. fungsinya adalah mengunci 1 HP agar tidak bisa digunakan oleh orang lain.
 - Geolokasi
   > Sistem akan mencatat lokasi pegawai pada saat melakukan presensi
+- Data Wajah / Deskriptor
+  > Data wajah pengguna disimpan didalam aplikasi ini sehingga ketika aplikasi di uninstall atau penyimpanan dibersihkan, pengguna harus registrasi wajah lagi.
 
 Sumber untuk pengenalan wajah ini diambil dari : https://github.com/MCarlomagno/FaceRecognitionAuth
 
