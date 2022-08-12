@@ -1,16 +1,36 @@
-# sistempresensi
+# Sistem Presensi Berbasis Pengenalan Wajah dengan Flutter
 
-A new Flutter project.
+## Installasi
+- Clone project ini
+- pastikan flutter anda versi 2.8.1 apabila kurang atau lebih dari versi tersebut mungkin harus ada beberapa penyesuaian terkait library dan coding
+- ketik `flutter pub get` setelah project ini dibuka
 
-## Getting Started
+## Tools
+- Visual Studio Code
 
-This project is a starting point for a Flutter application.
+## Api
+- ExpressJs
 
-A few resources to get you started if this is your first Flutter project:
+## Deskripsi
+ini merupakan project tugas akhir S1 Universitas Dr. Soetomo.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+pada project ini terdapat beberapa fitur seperti :
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Login
+- Dashboard
+  |- Tugas
+    |- Daftar Tugas
+      |- Presensi Tugas Masuk
+      |- Presensi Tugas Keluar
+  |- Laporan Presensi
+  |- Keluar
+  
+pada aplikasi ini terdapat beberapa rule atau aturan dalam penggunaannya. sebagai berikut:
+- Akses Login Terbatas
+  > aplikasi ini mengunci ID Device setiap HP dan setiap Username. fungsinya adalah mengunci 1 HP agar tidak bisa digunakan oleh orang lain.
+- Geolokasi
+  > Sistem akan mencatat lokasi pegawai pada saat melakukan presensi
+
+Sumber untuk pengenalan wajah ini diambil dari : https://github.com/MCarlomagno/FaceRecognitionAuth
+
+jika ada pertanyaan hubungi msadev@gmail.com
