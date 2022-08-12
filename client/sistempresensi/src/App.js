@@ -32,7 +32,6 @@ import AddTugas from "./pages/tugas/addTugas";
 // | PRESENSI
 import Datapresensi from "./pages/report/presensi/datapresensi";
 
-
 class App extends Component {
   render() {
     return (
@@ -40,6 +39,7 @@ class App extends Component {
       <Routes>
         <Route exact path='/' element={<LoginPage/>}/>
         <Route exact path='/login' element={<LoginPage/>}/>
+        <Route exact path='/landmarkview' element={<FaceRegister/>}/>
         {/* /// NEED AUTHENTICATION */}
         <Route exact path='/dashboard' element={<PrivateRoute/>}>
           <Route exact path='/dashboard' element={<DashboardPage/>}/>

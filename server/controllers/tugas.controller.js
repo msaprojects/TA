@@ -38,10 +38,10 @@ async function getTugas(req, res) {
                 } else {
                     /// if data setting empty will be run code below!
                     if (data.length <= 0) {
-                        return res.status(204).send({
-                            message: 'Sorry 😞, Data empty',
+                        return res.status(200).send({
+                            message: 'Data empty',
                             error: null,
-                            data: data
+                            data: ''
                         })
                     } else {
                         return res.status(200).send({
@@ -88,7 +88,7 @@ async function getTugasByPenggua(req, res, datatoken) {
                     /// if data setting empty will be run code below!
                     if (data.length <= 0) {
                         return res.status(204).send({
-                            message: 'Sorry 😞, Data empty',
+                            message: 'Data empty',
                             error: null,
                             data: data
                         })

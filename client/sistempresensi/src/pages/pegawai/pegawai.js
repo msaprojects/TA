@@ -37,12 +37,16 @@ class DataPegawaiPage extends Component {
                     field: 'flag_aktif'
                 },
                 {
-                    headerName: "Rekam Wajah Mobile",
+                    headerName: 'Device',
+                    field: 'uuid'
+                },
+                {
+                    headerName: "Rekam Mobile",
                     field: 'rekam_wajah',
                     valueFormatter: params => params.value === 1 ? 'Sudah' : 'Belum',
                 },
                 {
-                    headerName: "Rekam Wajah Web",
+                    headerName: "Rekam Web",
                     field: 'rekam_wajah_web',
                     valueFormatter: params => params.value === 1 ? 'Sudah' : 'Belum',
                 }

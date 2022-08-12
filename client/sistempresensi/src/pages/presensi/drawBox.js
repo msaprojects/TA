@@ -9,7 +9,8 @@ class DrawBox extends Component {
       descriptors: null,
       detections: null,
       match: null,
-      expression: null
+      expression: null,
+      landmark: null
     };
   }
 
@@ -25,11 +26,12 @@ class DrawBox extends Component {
   getDescription = async (props = this.props) => {
     const { fullDesc, faceMatcher } = props;
     if (!!fullDesc) {
-      
+      console.log(fullDesc)
       await this.setState({
         descriptors: fullDesc.map(fd => fd.descriptor),
         detections: fullDesc.map(fd => fd.detection),
-        expression: fullDesc.map(fd => fd.expressions)
+        expression: fullDesc.map(fd => fd.expressions),
+        // landmark: fullDesc.map(fd=>fd.lan)
       });
       if (!!this.state.descriptors && !!faceMatcher) {
         let match = await this.state.descriptors.map(descriptor =>

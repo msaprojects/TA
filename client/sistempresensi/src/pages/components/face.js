@@ -49,7 +49,6 @@ export async function createMatcher(faceProfile) {
       // {
       new faceapi.LabeledFaceDescriptors(
         faceProfile[member].name,
-        // faceProfile[member].idpegawai,
         faceProfile[member].descriptors.map(
           descriptor => new Float32Array(descriptor)
         )
@@ -58,7 +57,7 @@ export async function createMatcher(faceProfile) {
     // }
   );
 
-  // Create face matcher (maximum descriptor distance is 0.5)
+  // Create face matcher (maximum descriptor distance is 0.8)
   let faceMatcher = new faceapi.FaceMatcher(
     labeledDescriptors,
     maxDescriptorDistance

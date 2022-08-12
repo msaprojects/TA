@@ -24,7 +24,7 @@ const LoginPage = () => {
         }
         await axios.post('login', loginData).then((response) => {
             /// filtering access role
-            if (response.data.jabatan === 'admin' || response.data.jabatan === 'HR') {
+            if (response.data.jabatan === 'Admin' || response.data.jabatan === 'HR') {
                 localStorage.setItem('token', response.data.access_token)
                 localStorage.setItem('nama', response.data.nama)
                 navigate('/dashboard')
