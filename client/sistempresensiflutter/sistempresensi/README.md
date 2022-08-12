@@ -1,9 +1,9 @@
 # Sistem Presensi Berbasis Pengenalan Wajah dengan Flutter
 
 ## Installasi
-- Clone project ini
+- `Clone project` ini
 - pastikan flutter anda versi 2.8.1 apabila kurang atau lebih dari versi tersebut mungkin harus ada beberapa penyesuaian terkait library dan coding
-- ketik `flutter pub get` setelah project ini dibuka
+- ketik ```flutter pub get``` setelah project ini dibuka
 
 ## Tools
 - Visual Studio Code
