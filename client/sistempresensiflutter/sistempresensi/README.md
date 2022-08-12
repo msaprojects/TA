@@ -18,12 +18,12 @@ pada project ini terdapat beberapa fitur seperti :
 
 - Login
 - Dashboard
-  |- Tugas
-    |- Daftar Tugas
-      |- Presensi Tugas Masuk
-      |- Presensi Tugas Keluar
-  |- Laporan Presensi
-  |- Keluar
+  - Tugas
+    - Daftar Tugas
+      - Presensi Tugas Masuk
+      - Presensi Tugas Keluar
+  - Laporan Presensi
+  - Keluar
   
 pada aplikasi ini terdapat beberapa rule atau aturan dalam penggunaannya. sebagai berikut:
 - Akses Login Terbatas
